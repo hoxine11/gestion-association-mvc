@@ -1,0 +1,11 @@
+id,name,category,instructor_id,created_at
+ac1a2b3c-d4e5-4789-ac1a-2b3c4d5e6789,Morning Yoga,Wellness,i1a2b3c4-d5e6-4789-i1a2-b3c4d5e67890,2024-01-15T10:00:00
+ac2b3c4d-e5f6-4890-ac2b-3c4d5e6f7890,Zumba Fitness,Dance,i2b3c4d5-e6f7-4890-i2b3-c4d5e6f78901,2024-01-18T11:00:00
+ac3c4d5e-f6a7-4901-ac3c-4d5e6f7a8901,Karate Training,Martial Arts,i3c4d5e6-f7a8-4901-i3c4-d5e6f7a89012,2024-01-22T09:30:00
+ac4d5e6f-a7b8-4012-ac4d-5e6f7a8b9012,Aqua Aerobics,Swimming,i4d5e6f7-a8b9-4012-i4d5-e6f7a8b90123,2024-01-25T14:00:00
+ac5e6f7a-b8c9-4123-ac5e-6f7a8b9c0123,Kids Football,Sports,i5e6f7a8-b9c0-4123-i5e6-f7a8b9c01234,2024-02-05T16:00:00
+ac6f7a8b-c9d0-4234-ac6f-7a8b9c0d1234,Watercolor Workshop,Arts,i6f7a8b9-c0d1-4234-i6f7-a8b9c0d12345,2024-02-15T10:30:00
+ac7a8b9c-d0e1-4345-ac7a-8b9c0d1e2345,Evening Meditation,Wellness,i1a2b3c4-d5e6-4789-i1a2-b3c4d5e67890,2024-02-20T18:00:00
+ac8b9c0d-e1f2-4456-ac8b-9c0d1e2f3456,Salsa Dance,Dance,i2b3c4d5-e6f7-4890-i2b3-c4d5e6f78901,2024-03-01T19:00:00
+ac9c0d1e-f2a3-4567-ac9c-0d1e2f3a4567,Adult Swimming,Swimming,i4d5e6f7-a8b9-4012-i4d5-e6f7a8b90123,2024-03-10T15:30:00
+ac0d1e2f-a3b4-4678-ac0d-1e2f3a4b5678,Self Defense,Martial Arts,i3c4d5e6-f7a8-4901-i3c4-d5e6f7a89012,2024-03-15T17:00:00
