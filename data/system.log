@@ -1,0 +1,6 @@
+[2025-01-20 10:05:23] NEW_SUBSCRIPTION: {'member_name': 'Ahmed Ben Mahmoud', 'activity_name': 'Cours de Tajweed Niveau 1', 'amount': 3000.0, 'total_subscribers': 1}
+[2025-01-22 11:10:45] NEW_SUBSCRIPTION: {'member_name': 'Fatima Zahra Benali', 'activity_name': 'Tafsir Sourate Al-Baqara', 'amount': 3500.0, 'total_subscribers': 1}
+[2025-02-10 09:35:12] NEW_SUBSCRIPTION: {'member_name': 'Mohammed Amine Khelifi', 'activity_name': 'Memorisation Juz Amma', 'amount': 2500.0, 'total_subscribers': 1}
+[2025-02-12 14:05:33] NEW_SUBSCRIPTION: {'member_name': 'Khadija Bouzid', 'activity_name': 'Cours de Tajweed Niveau 1', 'amount': 3000.0, 'total_subscribers': 2}
+[2025-03-05 10:15:22] NEW_SUBSCRIPTION: {'member_name': 'Aisha Hadj Ahmed', 'activity_name': 'Qira'at Hafs an Asim', 'amount': 4000.0, 'total_subscribers': 1}
+[2025-04-02 15:20:11] ACTIVITY_CREATED: {'activity_name': 'Révision Complète du Coran', 'category': 'Muraja'a'}

@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion Association</title>
+    <title>نظام إدارة الجمعية القرآنية</title>
+    
+    <!-- Bootstrap 5 RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        /* Logo Mosquée */
+        .mosque-logo {
+            font-size: 80px;
+            color: #1e7e34;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
-        header {
+        .mosque-logo::before {
+            content: "🕌";
+        }
+
+        /* Header */
+        .main-header {
             background: white;
             padding: 30px;
             border-radius: 15px;
@@ -32,556 +45,837 @@
             text-align: center;
         }
 
-        h1 {
-            color: #667eea;
+        .main-header h1 {
+            color: #1e7e34;
             font-size: 2.5em;
             margin-bottom: 10px;
+            font-weight: 700;
         }
 
-        .subtitle {
+        .main-header .subtitle {
             color: #666;
             font-size: 1.1em;
         }
 
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+        /* Navigation to Dashboard */
+        .dashboard-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
         }
 
-        .tab-btn {
-            flex: 1;
-            min-width: 150px;
-            padding: 15px 25px;
-            background: white;
-            border: none;
+        .btn-dashboard {
+            background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
+            color: white;
+            padding: 12px 25px;
             border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
+            text-decoration: none;
             font-weight: 600;
+            box-shadow: 0 4px 15px rgba(30, 126, 52, 0.3);
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .tab-btn:hover {
+        .btn-dashboard:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 6px 20px rgba(30, 126, 52, 0.5);
             color: white;
         }
 
-        .tab-content {
-            display: none;
+        /* Content Card */
+        .content-card {
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s;
+        /* Tabs */
+        .nav-pills .nav-link {
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #1e7e34;
+            margin: 0 5px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
+            color: white;
         }
 
+        .nav-pills .nav-link:hover {
+            background: rgba(30, 126, 52, 0.1);
+        }
+
+        /* Section Headers */
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            border-bottom: 3px solid #1e7e34;
             padding-bottom: 15px;
-            border-bottom: 3px solid #667eea;
+            margin-bottom: 25px;
         }
 
         .section-header h2 {
-            color: #333;
-            font-size: 1.8em;
+            color: #1e7e34;
+            font-weight: 700;
         }
 
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s;
+        /* Tables */
+        .table {
+            text-align: right;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-danger {
-            background: #ff4757;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #ff3838;
-        }
-
-        .btn-success {
-            background: #2ecc71;
-            color: white;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #f8f9fa;
-            color: #333;
+        .table th {
+            background-color: #f8f9fa;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.85em;
-            letter-spacing: 1px;
+            color: #1e7e34;
         }
 
-        tr:hover {
-            background: #f8f9fa;
+        .table tbody tr:hover {
+            background-color: rgba(30, 126, 52, 0.05);
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 35px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            margin-bottom: 25px;
-        }
-
-        .modal-header h3 {
-            color: #333;
-            font-size: 1.5em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
+        /* Buttons */
+        .btn-gradient {
+            background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
+            border: none;
+            color: white;
             font-weight: 600;
         }
 
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: border-color 0.3s;
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(30, 126, 52, 0.4);
+            color: white;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
+        .btn-primary {
+            background-color: #1e7e34;
+            border-color: #1e7e34;
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
+        .btn-primary:hover {
+            background-color: #155724;
+            border-color: #155724;
         }
 
-        .modal-actions button {
-            flex: 1;
+        /* Badges */
+        .badge {
+            font-size: 0.9em;
+            padding: 6px 12px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
+        /* Modal */
+        .modal-header {
+            background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
+            color: white;
         }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+        .modal-header .btn-close {
+            filter: invert(1);
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #999;
         }
 
+        .empty-state i {
+            font-size: 3em;
+            color: #ddd;
+        }
+
+        /* Spinner */
+        .spinner-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Action Buttons */
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 5px;
+            justify-content: flex-end;
         }
 
-        .btn-sm {
-            padding: 8px 15px;
-            font-size: 13px;
-        }
-
+        /* Alert */
         .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            animation: slideDown 0.3s;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            border-right: 4px solid;
         }
 
         .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border-left: 4px solid #28a745;
+            border-right-color: #28a745;
         }
 
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border-left: 4px solid #dc3545;
+        .alert-danger {
+            border-right-color: #dc3545;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-pills {
+                flex-direction: column;
+            }
+
+            .nav-pills .nav-link {
+                margin: 5px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏛️ Gestion Association</h1>
-            <p class="subtitle">Système de gestion MVC - Architecture Moderne</p>
-        </header>
+    <!-- Dashboard Link -->
+    <div class="dashboard-link">
+        <a href="dashboard.html" class="btn-dashboard">
+            <i class="bi bi-speedometer2"></i> لوحة التحكم
+        </a>
+    </div>
 
+    <div class="container">
+        <!-- Header with Mosque Logo -->
+        <div class="main-header">
+            <div class="mosque-logo"></div>
+            <h1>نظام إدارة الجمعية القرآنية</h1>
+            <p class="subtitle">نظام شامل لإدارة الأنشطة والدورات القرآنية</p>
+        </div>
+
+        <!-- Alert Container -->
         <div id="alertContainer"></div>
 
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('members')">👥 Membres</button>
-            <button class="tab-btn" onclick="showTab('instructors')">👨‍🏫 Instructeurs</button>
-            <button class="tab-btn" onclick="showTab('activities')">🎯 Activités</button>
-            <button class="tab-btn" onclick="showTab('subscriptions')">📝 Abonnements</button>
-        </div>
+        <!-- Content Card -->
+        <div class="content-card">
+            <!-- Navigation Tabs -->
+            <ul class="nav nav-pills mb-4 justify-content-center" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="members-tab" data-bs-toggle="pill" data-bs-target="#members" type="button" role="tab">
+                        <i class="bi bi-people-fill"></i> الأعضاء
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="instructors-tab" data-bs-toggle="pill" data-bs-target="#instructors" type="button" role="tab">
+                        <i class="bi bi-person-badge"></i> المعلمون
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="activities-tab" data-bs-toggle="pill" data-bs-target="#activities" type="button" role="tab">
+                        <i class="bi bi-calendar-event"></i> الدورات
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="subscriptions-tab" data-bs-toggle="pill" data-bs-target="#subscriptions" type="button" role="tab">
+                        <i class="bi bi-card-checklist"></i> الاشتراكات
+                    </button>
+                </li>
+            </ul>
 
-        <!-- MEMBERS TAB -->
-        <div id="members" class="tab-content active">
-            <div class="section-header">
-                <h2>Liste des Membres</h2>
-                <button class="btn btn-primary" onclick="openAddMemberModal()">➕ Ajouter Membre</button>
-            </div>
-            <div id="membersTable"></div>
-        </div>
+            <!-- Tab Content -->
+            <div class="tab-content" id="mainTabsContent">
+                
+                <!-- MEMBERS TAB -->
+                <div class="tab-pane fade show active" id="members" role="tabpanel">
+                    <div class="section-header d-flex justify-content-between align-items-center">
+                        <h2><i class="bi bi-people"></i> قائمة الأعضاء</h2>
+                        <button class="btn btn-gradient" onclick="openAddMemberModal()">
+                            <i class="bi bi-plus-circle"></i> إضافة عضو
+                        </button>
+                    </div>
+                    <div id="membersTable"></div>
+                </div>
 
-        <!-- INSTRUCTORS TAB -->
-        <div id="instructors" class="tab-content">
-            <div class="section-header">
-                <h2>Liste des Instructeurs</h2>
-                <button class="btn btn-primary" onclick="openAddInstructorModal()">➕ Ajouter Instructeur</button>
-            </div>
-            <div id="instructorsTable"></div>
-        </div>
+                <!-- INSTRUCTORS TAB -->
+                <div class="tab-pane fade" id="instructors" role="tabpanel">
+                    <div class="section-header d-flex justify-content-between align-items-center">
+                        <h2><i class="bi bi-person-badge"></i> قائمة المعلمين</h2>
+                        <button class="btn btn-gradient" onclick="openAddInstructorModal()">
+                            <i class="bi bi-plus-circle"></i> إضافة معلم
+                        </button>
+                    </div>
+                    <div id="instructorsTable"></div>
+                </div>
 
-        <!-- ACTIVITIES TAB -->
-        <div id="activities" class="tab-content">
-            <div class="section-header">
-                <h2>Liste des Activités</h2>
-                <button class="btn btn-primary" onclick="openAddActivityModal()">➕ Ajouter Activité</button>
-            </div>
-            <div id="activitiesTable"></div>
-        </div>
+                <!-- ACTIVITIES TAB -->
+                <div class="tab-pane fade" id="activities" role="tabpanel">
+                    <div class="section-header d-flex justify-content-between align-items-center">
+                        <h2><i class="bi bi-calendar-event"></i> قائمة الدورات</h2>
+                        <button class="btn btn-gradient" onclick="openAddActivityModal()">
+                            <i class="bi bi-plus-circle"></i> إضافة دورة
+                        </button>
+                    </div>
+                    <div id="activitiesTable"></div>
+                </div>
 
-        <!-- SUBSCRIPTIONS TAB -->
-        <div id="subscriptions" class="tab-content">
-            <div class="section-header">
-                <h2>Liste des Abonnements</h2>
-                <button class="btn btn-primary" onclick="openAddSubscriptionModal()">➕ Ajouter Abonnement</button>
+                <!-- SUBSCRIPTIONS TAB -->
+                <div class="tab-pane fade" id="subscriptions" role="tabpanel">
+                    <div class="section-header d-flex justify-content-between align-items-center">
+                        <h2><i class="bi bi-card-checklist"></i> قائمة الاشتراكات</h2>
+                        <button class="btn btn-gradient" onclick="openAddSubscriptionModal()">
+                            <i class="bi bi-plus-circle"></i> إضافة اشتراك
+                        </button>
+                    </div>
+                    <div id="subscriptionsTable"></div>
+                </div>
+
             </div>
-            <div id="subscriptionsTable"></div>
         </div>
     </div>
 
-    <!-- MODALS -->
-    <div id="addMemberModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Ajouter un Membre</h3>
+    <!-- MODALS (kept English variable names for JS compatibility) -->
+    
+    <!-- Member Modal -->
+    <div class="modal fade" id="memberModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberModalTitle">
+                        <i class="bi bi-person-plus"></i> إضافة عضو
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="memberForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="memberId">
+                        <div class="mb-3">
+                            <label class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-control" id="memberName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">العمر</label>
+                            <input type="number" class="form-control" id="memberAge" required min="1" max="120">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">رقم الهاتف</label>
+                            <input type="text" class="form-control" id="memberPhone" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> حفظ
+                        </button>
+                    </div>
+                </form>
             </div>
-            <form id="addMemberForm">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" id="memberName" required>
-                </div>
-                <div class="form-group">
-                    <label>Âge</label>
-                    <input type="number" id="memberAge" required min="1" max="120">
-                </div>
-                <div class="form-group">
-                    <label>Téléphone</label>
-                    <input type="text" id="memberPhone" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('addMemberModal')">Annuler</button>
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                </div>
-            </form>
         </div>
     </div>
 
-    <div id="addInstructorModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Ajouter un Instructeur</h3>
+    <!-- Instructor Modal -->
+    <div class="modal fade" id="instructorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instructorModalTitle">
+                        <i class="bi bi-person-plus"></i> إضافة معلم
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="instructorForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="instructorId">
+                        <div class="mb-3">
+                            <label class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-control" id="instructorName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">التخصص</label>
+                            <input type="text" class="form-control" id="instructorSpecialty" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> حفظ
+                        </button>
+                    </div>
+                </form>
             </div>
-            <form id="addInstructorForm">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" id="instructorName" required>
-                </div>
-                <div class="form-group">
-                    <label>Spécialité</label>
-                    <input type="text" id="instructorSpecialty" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('addInstructorModal')">Annuler</button>
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                </div>
-            </form>
         </div>
     </div>
 
-    <div id="addActivityModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Ajouter une Activité</h3>
+    <!-- Activity Modal -->
+    <div class="modal fade" id="activityModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activityModalTitle">
+                        <i class="bi bi-calendar-plus"></i> إضافة دورة
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="activityForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="activityId">
+                        <div class="mb-3">
+                            <label class="form-label">اسم الدورة</label>
+                            <input type="text" class="form-control" id="activityName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">الفئة</label>
+                            <input type="text" class="form-control" id="activityCategory" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">المعلم</label>
+                            <select class="form-select" id="activityInstructor" required></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> حفظ
+                        </button>
+                    </div>
+                </form>
             </div>
-            <form id="addActivityForm">
-                <div class="form-group">
-                    <label>Nom de l'activité</label>
-                    <input type="text" id="activityName" required>
-                </div>
-                <div class="form-group">
-                    <label>Catégorie</label>
-                    <input type="text" id="activityCategory" required>
-                </div>
-                <div class="form-group">
-                    <label>Instructeur</label>
-                    <select id="activityInstructor" required></select>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('addActivityModal')">Annuler</button>
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                </div>
-            </form>
         </div>
     </div>
 
-    <div id="addSubscriptionModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Ajouter un Abonnement</h3>
+    <!-- Subscription Modal -->
+    <div class="modal fade" id="subscriptionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="subscriptionModalTitle">
+                        <i class="bi bi-card-checklist"></i> إضافة اشتراك
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="subscriptionForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="subscriptionId">
+                        <div class="mb-3">
+                            <label class="form-label">العضو</label>
+                            <select class="form-select" id="subscriptionMember" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">الدورة</label>
+                            <select class="form-select" id="subscriptionActivity" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">المبلغ (دج)</label>
+                            <input type="number" class="form-control" id="subscriptionAmount" required min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> حفظ
+                        </button>
+                    </div>
+                </form>
             </div>
-            <form id="addSubscriptionForm">
-                <div class="form-group">
-                    <label>Membre</label>
-                    <select id="subscriptionMember" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Activité</label>
-                    <select id="subscriptionActivity" required></select>
-                </div>
-                <div class="form-group">
-                    <label>Montant (DZD)</label>
-                    <input type="number" id="subscriptionAmount" required min="0" step="0.01">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('addSubscriptionModal')">Annuler</button>
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                </div>
-            </form>
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-      const API_URL = 'http://127.0.0.1:8000/api';
+        const API_URL = 'http://127.0.0.1:8000/api';
 
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-            loadData(tabName);
-        }
+        // Load data when tab is shown
+        document.querySelectorAll('button[data-bs-toggle="pill"]').forEach(button => {
+            button.addEventListener('shown.bs.tab', event => {
+                const tabId = event.target.getAttribute('data-bs-target').substring(1);
+                loadData(tabId);
+            });
+        });
 
         async function loadData(type) {
             const container = document.getElementById(`${type}Table`);
-            container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Chargement des données...</p></div>';
+            container.innerHTML = '<div class="spinner-container"><div class="spinner-border text-success" role="status"><span class="visually-hidden">جاري التحميل...</span></div><p class="mt-3">جاري تحميل البيانات...</p></div>';
+            
             try {
                 const response = await fetch(`${API_URL}/${type}`);
                 const data = await response.json();
+                
                 if (type === 'members') displayMembers(data);
                 else if (type === 'instructors') displayInstructors(data);
                 else if (type === 'activities') displayActivities(data);
                 else if (type === 'subscriptions') displaySubscriptions(data);
             } catch (error) {
-                container.innerHTML = '<div class="empty-state"><p>❌ Erreur de chargement</p></div>';
-                showAlert('Erreur de connexion', 'error');
+                container.innerHTML = '<div class="empty-state"><i class="bi bi-exclamation-triangle"></i><p>خطأ في تحميل البيانات</p></div>';
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
             }
         }
 
         function displayMembers(members) {
             const container = document.getElementById('membersTable');
             if (members.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>📭 Aucun membre</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><p>لا يوجد أعضاء</p></div>';
                 return;
             }
-            let html = '<table><thead><tr><th>Nom</th><th>Âge</th><th>Téléphone</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+            
+            let html = '<div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>الاسم</th><th>العمر</th><th>الهاتف</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody>';
             members.forEach(m => {
-                html += `<tr><td>${m.name}</td><td>${m.age} ans</td><td>${m.phone}</td><td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td><td><button class="btn btn-danger btn-sm" onclick="deleteMember('${m.id}')">🗑️</button></td></tr>`;
+                html += `
+                    <tr>
+                        <td><i class="bi bi-person-circle text-success"></i> ${m.name}</td>
+                        <td>${m.age} سنة</td>
+                        <td><i class="bi bi-telephone"></i> ${m.phone}</td>
+                        <td>${new Date(m.created_at).toLocaleDateString('ar-DZ')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="editMember('${m.id}')" title="تعديل">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteMember('${m.id}')" title="حذف">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             container.innerHTML = html;
         }
 
         function displayInstructors(instructors) {
             const container = document.getElementById('instructorsTable');
             if (instructors.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>📭 Aucun instructeur</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><p>لا يوجد معلمون</p></div>';
                 return;
             }
-            let html = '<table><thead><tr><th>Nom</th><th>Spécialité</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+            
+            let html = '<div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>الاسم</th><th>التخصص</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody>';
             instructors.forEach(i => {
-                html += `<tr><td>${i.name}</td><td>${i.specialty}</td><td>${new Date(i.created_at).toLocaleDateString('fr-FR')}</td><td><button class="btn btn-danger btn-sm" onclick="deleteInstructor('${i.id}')">🗑️</button></td></tr>`;
+                html += `
+                    <tr>
+                        <td><i class="bi bi-person-badge text-success"></i> ${i.name}</td>
+                        <td><span class="badge bg-success">${i.specialty}</span></td>
+                        <td>${new Date(i.created_at).toLocaleDateString('ar-DZ')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="editInstructor('${i.id}')" title="تعديل">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteInstructor('${i.id}')" title="حذف">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             container.innerHTML = html;
         }
 
         function displayActivities(activities) {
             const container = document.getElementById('activitiesTable');
             if (activities.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>📭 Aucune activité</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><p>لا توجد دورات</p></div>';
                 return;
             }
-            let html = '<table><thead><tr><th>Nom</th><th>Catégorie</th><th>Instructeur</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+            
+            let html = '<div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>اسم الدورة</th><th>الفئة</th><th>معرف المعلم</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody>';
             activities.forEach(a => {
-                html += `<tr><td>${a.name}</td><td>${a.category}</td><td>${a.instructor_id.substring(0,8)}...</td><td>${new Date(a.created_at).toLocaleDateString('fr-FR')}</td><td><button class="btn btn-danger btn-sm" onclick="deleteActivity('${a.id}')">🗑️</button></td></tr>`;
+                html += `
+                    <tr>
+                        <td><i class="bi bi-book text-success"></i> ${a.name}</td>
+                        <td><span class="badge bg-info">${a.category}</span></td>
+                        <td>de>${a.instructor_id.substring(0,8)}...</code></td>
+                        <td>${new Date(a.created_at).toLocaleDateString('ar-DZ')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="editActivity('${a.id}')" title="تعديل">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteActivity('${a.id}')" title="حذف">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             container.innerHTML = html;
         }
 
         function displaySubscriptions(subscriptions) {
             const container = document.getElementById('subscriptionsTable');
             if (subscriptions.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>📭 Aucun abonnement</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><p>لا توجد اشتراكات</p></div>';
                 return;
             }
-            let html = '<table><thead><tr><th>Membre</th><th>Activité</th><th>Montant</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+            
+            let html = '<div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>معرف العضو</th><th>معرف الدورة</th><th>المبلغ</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody>';
             subscriptions.forEach(s => {
-                html += `<tr><td>${s.member_id.substring(0,8)}...</td><td>${s.activity_id.substring(0,8)}...</td><td>${parseFloat(s.amount).toFixed(2)} DZD</td><td>${new Date(s.created_at).toLocaleDateString('fr-FR')}</td><td><button class="btn btn-danger btn-sm" onclick="deleteSubscription('${s.id}')">🗑️</button></td></tr>`;
+                html += `
+                    <tr>
+                        <td>de>${s.member_id.substring(0,8)}...</code></td>
+                        <td>de>${s.activity_id.substring(0,8)}...</code></td>
+                        <td><strong>${parseFloat(s.amount).toFixed(2)} دج</strong></td>
+                        <td>${new Date(s.created_at).toLocaleDateString('ar-DZ')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="editSubscription('${s.id}')" title="تعديل">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteSubscription('${s.id}')" title="حذف">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             container.innerHTML = html;
         }
 
+        // MEMBER FUNCTIONS
         function openAddMemberModal() {
-            document.getElementById('addMemberModal').classList.add('active');
+            document.getElementById('memberModalTitle').innerHTML = '<i class="bi bi-person-plus"></i> إضافة عضو';
+            document.getElementById('memberForm').reset();
+            document.getElementById('memberId').value = '';
+            new bootstrap.Modal(document.getElementById('memberModal')).show();
         }
 
+        async function editMember(id) {
+            const response = await fetch(`${API_URL}/members/${id}`);
+            const member = await response.json();
+            
+            document.getElementById('memberModalTitle').innerHTML = '<i class="bi bi-pencil-square"></i> تعديل عضو';
+            document.getElementById('memberId').value = member.id;
+            document.getElementById('memberName').value = member.name;
+            document.getElementById('memberAge').value = member.age;
+            document.getElementById('memberPhone').value = member.phone;
+            new bootstrap.Modal(document.getElementById('memberModal')).show();
+        }
+
+        document.getElementById('memberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('memberId').value;
+            const data = {
+                name: document.getElementById('memberName').value,
+                age: parseInt(document.getElementById('memberAge').value),
+                phone: document.getElementById('memberPhone').value
+            };
+            
+            try {
+                if (id) {
+                    await fetch(`${API_URL}/members/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم تعديل العضو بنجاح!', 'success');
+                } else {
+                    await fetch(`${API_URL}/members`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم إضافة العضو بنجاح!', 'success');
+                }
+                
+                bootstrap.Modal.getInstance(document.getElementById('memberModal')).hide();
+                loadData('members');
+            } catch (error) {
+                showAlert('حدث خطأ أثناء العملية', 'danger');
+            }
+        });
+
+        async function deleteMember(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا العضو؟')) return;
+            
+            try {
+                await fetch(`${API_URL}/members/${id}`, {method: 'DELETE'});
+                showAlert('تم حذف العضو!', 'success');
+                loadData('members');
+            } catch (error) {
+                showAlert('خطأ في الحذف', 'danger');
+            }
+        }
+
+        // INSTRUCTOR FUNCTIONS
         function openAddInstructorModal() {
-            document.getElementById('addInstructorModal').classList.add('active');
+            document.getElementById('instructorModalTitle').innerHTML = '<i class="bi bi-person-plus"></i> إضافة معلم';
+            document.getElementById('instructorForm').reset();
+            document.getElementById('instructorId').value = '';
+            new bootstrap.Modal(document.getElementById('instructorModal')).show();
         }
 
+        async function editInstructor(id) {
+            const response = await fetch(`${API_URL}/instructors/${id}`);
+            const instructor = await response.json();
+            
+            document.getElementById('instructorModalTitle').innerHTML = '<i class="bi bi-pencil-square"></i> تعديل معلم';
+            document.getElementById('instructorId').value = instructor.id;
+            document.getElementById('instructorName').value = instructor.name;
+            document.getElementById('instructorSpecialty').value = instructor.specialty;
+            new bootstrap.Modal(document.getElementById('instructorModal')).show();
+        }
+
+        document.getElementById('instructorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('instructorId').value;
+            const data = {
+                name: document.getElementById('instructorName').value,
+                specialty: document.getElementById('instructorSpecialty').value
+            };
+            
+            try {
+                if (id) {
+                    await fetch(`${API_URL}/instructors/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم تعديل المعلم بنجاح!', 'success');
+                } else {
+                    await fetch(`${API_URL}/instructors`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم إضافة المعلم بنجاح!', 'success');
+                }
+                
+                bootstrap.Modal.getInstance(document.getElementById('instructorModal')).hide();
+                loadData('instructors');
+            } catch (error) {
+                showAlert('حدث خطأ أثناء العملية', 'danger');
+            }
+        });
+
+        async function deleteInstructor(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا المعلم؟')) return;
+            
+            try {
+                await fetch(`${API_URL}/instructors/${id}`, {method: 'DELETE'});
+                showAlert('تم حذف المعلم!', 'success');
+                loadData('instructors');
+            } catch (error) {
+                showAlert('خطأ في الحذف', 'danger');
+            }
+        }
+
+        // ACTIVITY FUNCTIONS
         async function openAddActivityModal() {
-            document.getElementById('addActivityModal').classList.add('active');
+            document.getElementById('activityModalTitle').innerHTML = '<i class="bi bi-calendar-plus"></i> إضافة دورة';
+            document.getElementById('activityForm').reset();
+            document.getElementById('activityId').value = '';
             await loadInstructorsDropdown();
+            new bootstrap.Modal(document.getElementById('activityModal')).show();
         }
 
-        async function openAddSubscriptionModal() {
-            document.getElementById('addSubscriptionModal').classList.add('active');
-            await loadMembersDropdown();
-            await loadActivitiesDropdown();
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+        async function editActivity(id) {
+            const response = await fetch(`${API_URL}/activities/${id}`);
+            const activity = await response.json();
+            
+            document.getElementById('activityModalTitle').innerHTML = '<i class="bi bi-pencil-square"></i> تعديل دورة';
+            document.getElementById('activityId').value = activity.id;
+            document.getElementById('activityName').value = activity.name;
+            document.getElementById('activityCategory').value = activity.category;
+            
+            await loadInstructorsDropdown();
+            document.getElementById('activityInstructor').value = activity.instructor_id;
+            
+            new bootstrap.Modal(document.getElementById('activityModal')).show();
         }
 
         async function loadInstructorsDropdown() {
             const response = await fetch(`${API_URL}/instructors`);
             const instructors = await response.json();
             const select = document.getElementById('activityInstructor');
-            select.innerHTML = '<option value="">Sélectionner</option>';
+            select.innerHTML = '<option value="">اختر معلماً</option>';
             instructors.forEach(i => {
-                select.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                select.innerHTML += `<option value="${i.id}">${i.name} - ${i.specialty}</option>`;
             });
+        }
+
+        document.getElementById('activityForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('activityId').value;
+            const data = {
+                name: document.getElementById('activityName').value,
+                category: document.getElementById('activityCategory').value,
+                instructor_id: document.getElementById('activityInstructor').value
+            };
+            
+            try {
+                if (id) {
+                    await fetch(`${API_URL}/activities/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم تعديل الدورة بنجاح!', 'success');
+                } else {
+                    await fetch(`${API_URL}/activities`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم إضافة الدورة بنجاح!', 'success');
+                }
+                
+                bootstrap.Modal.getInstance(document.getElementById('activityModal')).hide();
+                loadData('activities');
+            } catch (error) {
+                showAlert('حدث خطأ أثناء العملية', 'danger');
+            }
+        });
+
+        async function deleteActivity(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الدورة؟')) return;
+            
+            try {
+                await fetch(`${API_URL}/activities/${id}`, {method: 'DELETE'});
+                showAlert('تم حذف الدورة!', 'success');
+                loadData('activities');
+            } catch (error) {
+                showAlert('خطأ في الحذف', 'danger');
+            }
+        }
+
+        // SUBSCRIPTION FUNCTIONS
+        async function openAddSubscriptionModal() {
+            document.getElementById('subscriptionModalTitle').innerHTML = '<i class="bi bi-card-checklist"></i> إضافة اشتراك';
+            document.getElementById('subscriptionForm').reset();
+            document.getElementById('subscriptionId').value = '';
+            await loadMembersDropdown();
+            await loadActivitiesDropdown();
+            new bootstrap.Modal(document.getElementById('subscriptionModal')).show();
+        }
+
+        async function editSubscription(id) {
+            const response = await fetch(`${API_URL}/subscriptions/${id}`);
+            const subscription = await response.json();
+            
+            document.getElementById('subscriptionModalTitle').innerHTML = '<i class="bi bi-pencil-square"></i> تعديل اشتراك';
+            document.getElementById('subscriptionId').value = subscription.id;
+            
+            await loadMembersDropdown();
+            await loadActivitiesDropdown();
+            
+            document.getElementById('subscriptionMember').value = subscription.member_id;
+            document.getElementById('subscriptionActivity').value = subscription.activity_id;
+            document.getElementById('subscriptionAmount').value = subscription.amount;
+            
+            new bootstrap.Modal(document.getElementById('subscriptionModal')).show();
         }
 
         async function loadMembersDropdown() {
             const response = await fetch(`${API_URL}/members`);
             const members = await response.json();
             const select = document.getElementById('subscriptionMember');
-            select.innerHTML = '<option value="">Sélectionner</option>';
+            select.innerHTML = '<option value="">اختر عضواً</option>';
             members.forEach(m => {
-                select.innerHTML += `<option value="${m.id}">${m.name}</option>`;
+                select.innerHTML += `<option value="${m.id}">${m.name} - ${m.phone}</option>`;
             });
         }
 
@@ -589,152 +883,73 @@
             const response = await fetch(`${API_URL}/activities`);
             const activities = await response.json();
             const select = document.getElementById('subscriptionActivity');
-            select.innerHTML = '<option value="">Sélectionner</option>';
+            select.innerHTML = '<option value="">اختر دورة</option>';
             activities.forEach(a => {
-                select.innerHTML += `<option value="${a.id}">${a.name}</option>`;
+                select.innerHTML += `<option value="${a.id}">${a.name} - ${a.category}</option>`;
             });
         }
 
-        document.getElementById('addMemberForm').addEventListener('submit', async (e) => {
+        document.getElementById('subscriptionForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('memberName').value;
-            const age = document.getElementById('memberAge').value;
-            const phone = document.getElementById('memberPhone').value;
+            
+            const id = document.getElementById('subscriptionId').value;
+            const data = {
+                member_id: document.getElementById('subscriptionMember').value,
+                activity_id: document.getElementById('subscriptionActivity').value,
+                amount: parseFloat(document.getElementById('subscriptionAmount').value)
+            };
+            
             try {
-                const response = await fetch(`${API_URL}/members?name=${encodeURIComponent(name)}&age=${age}&phone=${encodeURIComponent(phone)}`, {method: 'POST'});
-                if (response.ok) {
-                    showAlert('Membre ajouté!', 'success');
-                    closeModal('addMemberModal');
-                    loadData('members');
-                    e.target.reset();
+                if (id) {
+                    await fetch(`${API_URL}/subscriptions/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم تعديل الاشتراك بنجاح!', 'success');
+                } else {
+                    await fetch(`${API_URL}/subscriptions`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                    showAlert('تم إضافة الاشتراك بنجاح!', 'success');
                 }
+                
+                bootstrap.Modal.getInstance(document.getElementById('subscriptionModal')).hide();
+                loadData('subscriptions');
             } catch (error) {
-                showAlert('Erreur', 'error');
+                showAlert('حدث خطأ أثناء العملية', 'danger');
             }
         });
-
-        document.getElementById('addInstructorForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('instructorName').value;
-            const specialty = document.getElementById('instructorSpecialty').value;
-            try {
-                const response = await fetch(`${API_URL}/instructors?name=${encodeURIComponent(name)}&specialty=${encodeURIComponent(specialty)}`, {method: 'POST'});
-                if (response.ok) {
-                    showAlert('Instructeur ajouté!', 'success');
-                    closeModal('addInstructorModal');
-                    loadData('instructors');
-                    e.target.reset();
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        });
-
-        document.getElementById('addActivityForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('activityName').value;
-            const category = document.getElementById('activityCategory').value;
-            const instructor_id = document.getElementById('activityInstructor').value;
-            try {
-                const response = await fetch(`${API_URL}/activities?name=${encodeURIComponent(name)}&category=${encodeURIComponent(category)}&instructor_id=${instructor_id}`, {method: 'POST'});
-                if (response.ok) {
-                    showAlert('Activité ajoutée!', 'success');
-                    closeModal('addActivityModal');
-                    loadData('activities');
-                    e.target.reset();
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        });
-
-        document.getElementById('addSubscriptionForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const member_id = document.getElementById('subscriptionMember').value;
-            const activity_id = document.getElementById('subscriptionActivity').value;
-            const amount = document.getElementById('subscriptionAmount').value;
-            try {
-                const response = await fetch(`${API_URL}/subscriptions?member_id=${member_id}&activity_id=${activity_id}&amount=${amount}`, {method: 'POST'});
-                if (response.ok) {
-                    showAlert('Abonnement ajouté!', 'success');
-                    closeModal('addSubscriptionModal');
-                    loadData('subscriptions');
-                    e.target.reset();
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        });
-
-        async function deleteMember(id) {
-            if (!confirm('Supprimer ce membre?')) return;
-            try {
-                const response = await fetch(`${API_URL}/members/${id}`, {method: 'DELETE'});
-                if (response.ok) {
-                    showAlert('Supprimé!', 'success');
-                    loadData('members');
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        }
-
-        async function deleteInstructor(id) {
-            if (!confirm('Supprimer cet instructeur?')) return;
-            try {
-                const response = await fetch(`${API_URL}/instructors/${id}`, {method: 'DELETE'});
-                if (response.ok) {
-                    showAlert('Supprimé!', 'success');
-                    loadData('instructors');
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        }
-
-        async function deleteActivity(id) {
-            if (!confirm('Supprimer cette activité?')) return;
-            try {
-                const response = await fetch(`${API_URL}/activities/${id}`, {method: 'DELETE'});
-                if (response.ok) {
-                    showAlert('Supprimé!', 'success');
-                    loadData('activities');
-                }
-            } catch (error) {
-                showAlert('Erreur', 'error');
-            }
-        }
 
         async function deleteSubscription(id) {
-            if (!confirm('Supprimer cet abonnement?')) return;
+            if (!confirm('هل أنت متأكد من حذف هذا الاشتراك؟')) return;
+            
             try {
-                const response = await fetch(`${API_URL}/subscriptions/${id}`, {method: 'DELETE'});
-                if (response.ok) {
-                    showAlert('Supprimé!', 'success');
-                    loadData('subscriptions');
-                }
+                await fetch(`${API_URL}/subscriptions/${id}`, {method: 'DELETE'});
+                showAlert('تم حذف الاشتراك!', 'success');
+                loadData('subscriptions');
             } catch (error) {
-                showAlert('Erreur', 'error');
+                showAlert('خطأ في الحذف', 'danger');
             }
         }
 
+        // ALERT SYSTEM
         function showAlert(message, type) {
             const container = document.getElementById('alertContainer');
             const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.role = 'alert';
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
             container.appendChild(alert);
-            setTimeout(() => alert.remove(), 3000);
+            setTimeout(() => alert.remove(), 4000);
         }
 
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
-        });
-
+        // Load initial data
         window.addEventListener('load', () => {
             loadData('members');
         });
